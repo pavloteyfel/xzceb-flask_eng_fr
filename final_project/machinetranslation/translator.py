@@ -22,3 +22,10 @@ def english_to_french(english_text):
         text=english_text, model_id="en-fr"
     ).get_result()
     return french_text
+
+
+def french_to_english(french_text):
+    english_text = language_translator.translate(
+        text=french_text, model_id="fr-en"
+    ).get_result()
+    return english_text
