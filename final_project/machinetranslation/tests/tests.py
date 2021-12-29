@@ -1,6 +1,5 @@
 import unittest
 
-from ibm_cloud_sdk_core.api_exception import ApiException
 from machinetranslation.translator import english_to_french, french_to_english
 
 
