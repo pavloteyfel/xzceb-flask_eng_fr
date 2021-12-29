@@ -25,7 +25,7 @@ def translation_model(text, model):
     try:
         response = language_translator.translate(text=text, model_id=model).get_result()
     except ApiException as error:
-        return "Error occured during calling the API."
+        return f"Error occured during calling the API: {error}"
     return response.get("translations")[0].get("translation")
 
 
