@@ -1,8 +1,10 @@
-import json
-from ibm_watson import LanguageTranslatorV3
-from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
+"""IMB Watson based module for english to frensh and frensh to english translations"""
 import os
+
+from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
+from ibm_watson import LanguageTranslatorV3, ApiException
 from dotenv import load_dotenv
+
 
 load_dotenv()
 
@@ -10,6 +12,7 @@ apikey = os.environ["apikey"]
 url = os.environ["url"]
 
 authenticator = IAMAuthenticator(apikey)
+
 language_translator = LanguageTranslatorV3(
     version="2018-05-01", authenticator=authenticator
 )
@@ -17,15 +20,34 @@ language_translator = LanguageTranslatorV3(
 language_translator.set_service_url(url)
 
 
-def english_to_french(english_text):
-    french_text = language_translator.translate(
-        text=english_text, model_id="en-fr"
-    ).get_result()
-    return french_text
+def translation_model(text, model):
+    """General function for translating any text based on IBM watson models"""
+    try:
+        response = language_translator.translate(
+            text=text, model_id=model).get_result()
+    except ApiException as error:
+        print(error)
+        return "Error occured during calling the API."
+    return response.get("translations")[0].get("translation")
 
 
-def french_to_english(french_text):
-    english_text = language_translator.translate(
-        text=french_text, model_id="fr-en"
-    ).get_result()
-    return english_text
+def english_to_french(text):
+    """
+    Parameters:
+        text (str): english text
+
+    Returns:
+        french translation
+    """
+    return translation_model(text, "en-fr")
+
+
+def french_to_english(text):
+    """
+    Parameters:
+        text (str): french text
+
+    Returns:
+        english translation
+    """
+    return translation_model(text, "fr-en")
