@@ -23,10 +23,8 @@ language_translator.set_service_url(url)
 def translation_model(text, model):
     """General function for translating any text based on IBM watson models"""
     try:
-        response = language_translator.translate(
-            text=text, model_id=model).get_result()
+        response = language_translator.translate(text=text, model_id=model).get_result()
     except ApiException as error:
-        print(error)
         return "Error occured during calling the API."
     return response.get("translations")[0].get("translation")
 
