@@ -17,10 +17,10 @@ class TestTranslator(unittest.TestCase):
         self.assertNotEqual(french_to_english("Bonjour"), "bad translation")
 
     def test_english_to_french_raise_exception(self):
-        self.assertEqual(english_to_french(""), "Error occured during calling the API.")
+        self.assertEqual(english_to_french("")[:36], "Error occured during calling the API")
 
     def test_french_to_english_raise_exception(self):
-        self.assertEqual(french_to_english(""), "Error occured during calling the API.")
+        self.assertEqual(french_to_english("")[:36], "Error occured during calling the API")
 
 
 if __name__ == "__main__":
